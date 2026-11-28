@@ -1,0 +1,17 @@
+[importlinter]
+root_package = {{cookiecutter.project_slug}}
+
+[layers]
+# Core app
+core = {{cookiecutter.project_slug}}
+
+# Satellites (independent Django apps)
+users = {{cookiecutter.project_slug}}.users
+
+# === Allowed Dependencies ===
+# Core app can import from satellites
+[allowed:core->users]
+
+# === Forbidden Dependencies ===
+# Satellites must NOT import from core or other satellites
+[forbidden:users->core]

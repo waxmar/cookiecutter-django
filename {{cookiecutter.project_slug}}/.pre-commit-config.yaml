@@ -56,6 +56,37 @@ repos:
       - id: djlint-reformat-django
       - id: djlint-django
 
+  # Import Linting: Check if all apps are registered in .importlinter
+  - repo: local
+    hooks:
+      - id: check-import-linter-coverage
+        name: check-import-linter-coverage
+        entry: uv run python bin/importlinter_check_coverage.py
+        language: system
+        pass_filenames: false
+        stages: [commit, push]
+
+  # Import Linting: Run import-linter
+  - repo: https://github.com/seddonym/import-linter
+    rev: 1.9.0
+    hooks:
+      - id: import-linter
+        name: import-linter
+        entry: uv run import-linter --config .importlinter
+        language: system
+        pass_filenames: false
+        stages: [commit, push]
+
+  # Auto-update .importlinter when new apps are added
+  - repo: local
+    hooks:
+      - id: auto-update-importlinter
+        name: auto-update-importlinter
+        entry: uv run python bin/importlinter_add_apps.py
+        language: system
+        pass_filenames: false
+        files: ^(config/settings/base\.py|.*/apps\.py)$
+
 # sets up .pre-commit-ci.yaml to ensure pre-commit dependencies stay up to date
 ci:
   autoupdate_schedule: weekly
