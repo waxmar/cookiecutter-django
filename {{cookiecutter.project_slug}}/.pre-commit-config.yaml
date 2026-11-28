@@ -61,7 +61,7 @@ repos:
     hooks:
       - id: check-import-linter-coverage
         name: check-import-linter-coverage
-        entry: uv run python check_import_linter_coverage.py
+        entry: uv run python bin/importlinter_check_coverage.py
         language: system
         pass_filenames: false
         stages: [commit, push]
@@ -82,7 +82,7 @@ repos:
     hooks:
       - id: auto-update-importlinter
         name: auto-update-importlinter
-        entry: uv run python add_to_importlinter.py
+        entry: uv run python bin/importlinter_add_apps.py
         language: system
         pass_filenames: false
         files: ^(config/settings/base\.py|.*/apps\.py)$
