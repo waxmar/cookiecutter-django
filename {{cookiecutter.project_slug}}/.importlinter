@@ -1,0 +1,29 @@
+[importlinter]
+root_package = {{cookiecutter.project_slug}}
+
+[layers]
+# Core app and its features
+core = {{cookiecutter.project_slug}}.core
+users = {{cookiecutter.project_slug}}.core.users
+blog = {{cookiecutter.project_slug}}.core.blog
+
+# Satellites (independent Django apps)
+externalsystem = {{cookiecutter.project_slug}}.externalsystem
+
+# === Allowed Dependencies ===
+# Core app can import from all features and satellites
+[allowed:core->users]
+[allowed:core->blog]
+[allowed:core->externalsystem]
+
+# Features can import from core and other features
+[allowed:users->core]
+[allowed:blog->core]
+[allowed:users->blog]
+[allowed:blog->users]
+
+# === Forbidden Dependencies ===
+# Satellites must NOT import from core or other satellites
+[forbidden:externalsystem->core]
+[forbidden:externalsystem->users]
+[forbidden:externalsystem->blog]

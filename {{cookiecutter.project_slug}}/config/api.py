@@ -8,4 +8,4 @@ api = NinjaAPI(
     docs_decorator=staff_member_required,
 )
 
-api.add_router("/users/", "{{ cookiecutter.project_slug }}.users.api.views.router")
+api.add_router("/users/", "{{ cookiecutter.project_slug }}.core.users.api.views.router")
