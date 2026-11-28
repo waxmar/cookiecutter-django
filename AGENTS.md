@@ -107,3 +107,15 @@ The generated Django project uses:
 3. Add file removal/modification logic in `hooks/post_gen_project.py`
 4. Use Jinja2 conditionals in template files: `{% if cookiecutter.option == 'y' %}`
 5. Add test combinations to `SUPPORTED_COMBINATIONS` in `tests/test_cookiecutter_generation.py`
+
+## Import Linting Rules
+
+This project uses `import-linter` to enforce architecture rules for satellite apps:
+
+- **`{{cookiecutter.project_slug}}/`** is the core application
+- **`users/`** is a satellite app (independent Django app)
+- **Import Rules (enforced by `import-linter`)**:
+  - Core app can import from satellites: `from users.models import User`
+  - Satellites MUST NOT import from core or other satellites: `users/` must not import from `{{cookiecutter.project_slug}}/`
+
+When adding new satellite apps, update `.importlinter` to include them as layers.

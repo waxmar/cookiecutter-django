@@ -21,6 +21,7 @@ dependencies = [
 dev = [
   {# set the an initial indentation for uv to follow #}
   "pytest",
+  "import-linter",
 ]
 
 # ==== djLint ====
